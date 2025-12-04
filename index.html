@@ -27,18 +27,55 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; padding: 2rem; display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #0b1b2b; color: #f5f7fa; }
-    .card { max-width: 480px; text-align: center; background: rgba(255,255,255,0.08); padding: 2rem; border-radius: 18px; box-shadow: 0 20px 40px rgba(0,0,0,0.35); }
-    a { color: #7ad1ff; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #ffffff;
+      color: #374151;
+      min-height: 100vh;
+    }
+
+    #main-loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    #main-loading-overlay .main-spinner {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: conic-gradient(#E6194B 0deg 120deg, #F58231 120deg 240deg, #FFE119 240deg 360deg);
+      animation: spin 1.25s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    #main-loading-overlay .main-loading-text {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
   <noscript>
     <meta http-equiv="refresh" content="0;url=/uk-air-pollution-emissions-data-explorer/">
   </noscript>
 </head>
 <body>
-  <div class="card">
-    <h1>Redirecting…</h1>
-    <p>You should be forwarded to the updated explorer URL automatically. If not, <a id="fallback-link" href="/uk-air-pollution-emissions-data-explorer/">click here</a>.</p>
+  <div id="main-loading-overlay" role="status" aria-live="polite">
+    <div class="main-spinner" aria-hidden="true"></div>
+    <p class="main-loading-text">Loading data, please wait...</p>
   </div>
   <script>
     (function redirect() {
@@ -58,10 +95,6 @@
       }
       var targetPath = remainder === '/' ? '' : remainder;
       var targetUrl = current.origin + TARGET_PREFIX + targetPath + current.search + current.hash;
-      var fallbackLink = document.getElementById('fallback-link');
-      if (fallbackLink) {
-        fallbackLink.href = TARGET_PREFIX + targetPath + current.search + current.hash;
-      }
       if (targetUrl !== current.href) {
         window.location.replace(targetUrl);
       }
