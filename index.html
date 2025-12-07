@@ -48,16 +48,26 @@
       padding: 0 1.5rem;
     }
 
+    #main-loading-overlay .main-loading-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 320px;
+    }
+
     #main-loading-overlay .main-spinner {
       width: 72px;
       height: 72px;
       border-radius: 50%;
       background: conic-gradient(#E6194B 0deg 120deg, #F58231 120deg 240deg, #FFE119 240deg 360deg);
       animation: spin 1.25s linear infinite;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       margin: 0;
     }
 
@@ -65,11 +75,6 @@
       font-size: 18px;
       font-weight: 500;
       margin: 0;
-      position: absolute;
-      top: calc(50% + 36px + 20px);
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
     }
 
     @keyframes spin {
@@ -83,8 +88,10 @@
 </head>
 <body>
   <div id="main-loading-overlay" role="status" aria-live="polite">
-    <div class="main-spinner" aria-hidden="true"></div>
-    <p class="main-loading-text">Loading data, please wait...</p>
+    <div class="main-loading-content">
+      <div class="main-spinner" aria-hidden="true"></div>
+      <p class="main-loading-text">Loading data, please wait...</p>
+    </div>
   </div>
   <script>
     (function redirect() {
